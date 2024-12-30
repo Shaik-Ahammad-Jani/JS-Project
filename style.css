@@ -1,6 +1,6 @@
 body{
     position: relative;
-    /* overflow: hidden; */
+    overflow: hidden;
 }
 section {
     display: flex; /* Use flexbox to lay out the sections horizontally */
@@ -295,6 +295,8 @@ section {
     justify-content: center;
     padding: 10px 10px 10px 40px;
     border: 1px solid rgba(0,0,0,0.3);
+    /* overflow: visible;
+    box-sizing: border-box; */
     border-radius: 50px;
     height: 7%;
 }
@@ -303,9 +305,22 @@ section {
     cursor: pointer;
 }
 
-#input input{
+#content{
+    width: 80%;
+    height: 500px;
+    position: absolute;
+    /* border: 1px solid;
+    box-shadow: 2px 2px 2px gray; */
+    top:10%;
+    overflow: visible;
+    left:15%;
+
+    /* background-color: red; */
+}
+
+#input #input1{
     max-width: 100%;
-    border: none;
+    border:none;
     outline: none;
     flex: 1;
     padding-left: 10px;
@@ -313,10 +328,10 @@ section {
     /* margin: 0px -100px 0px -100px; */
 }
 
-#input input::placeholder{
+#input #input1::placeholder{
     font-size: 1em;
     max-width: 100%;
-    /* padding-left: 10px; */
+    padding-left: 10px;
 }
 
 @media screen and (max-width:768px) {

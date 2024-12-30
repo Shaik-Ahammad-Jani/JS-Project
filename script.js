@@ -141,6 +141,12 @@ const prompts=[
     const apikey="AIzaSyCLpFWdmghLtYZNR6fNR8j-sSbVtW9azF8"
     const apiurl="https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent"
 
+    contents=document.getElementById("content")
+    // contents.style.position = "relative";
+    contents.style.width = "80%";
+    contents.style.height = "500px"; // Adjust height as needed
+    contents.style.overflow = "auto"; // Enable scrolling if content overflows
+    // contents.style.border = "1px solid #ccc";
     const resultsContainer = document.createElement("div");
     resultsContainer.id = "results-container";
     resultsContainer.style.marginTop = "20px";
@@ -149,11 +155,11 @@ const prompts=[
     resultsContainer.style.left="15%"
     resultsContainer.style.padding = "10px";
     resultsContainer.style.maxWidth = "100%";
-    resultsContainer.style.height="50vh";
-    // resultsContainer.style.overflow="auto"
+    resultsContainer.style.height="400px";
+    resultsContainer.style.overflow="visible"
     resultsContainer.style.margin = "auto";
     // resultsContainer.style.zIndex="-20"
-    document.body.appendChild(resultsContainer);
+    contents.appendChild(resultsContainer);
 
     // Create a loading indicator
     const loadingIndicator = document.createElement("h2");
@@ -172,9 +178,10 @@ const prompts=[
 
 input1.addEventListener("keypress",async (e)=>{
     if(e.key=="Enter" && input1.value.trim()!==""){
+        e.preventDefault();
         const query=input1.value.trim()
 
-        if(prompts.includes(query)){
+        // if(prompts.includes(query)){
             h1=document.getElementById("h1")
             if(h1){
                 h1.style.display="none"
@@ -202,35 +209,70 @@ input1.addEventListener("keypress",async (e)=>{
                 }
                 const data = await responce.json();
 
-                    // Extract content from the response
                     const generatedContent = data.candidates?.[0]?.content?.parts[0]?.text || "No content generated.";
+
+
+                    const existingContent = resultsContainer.innerHTML;
+                    // resultsContainer.innerHTML = `
+                    // <div style="
+                    //     margin-bottom: 20px;
+                    //     // padding: 15px;
+                    //     border-bottom: 1px solid #ccc;
+                    //     width:100%;
+                    //     height:400px;
+                    //     overflow:auto;
+
+                    // ">
+                    //     ${generatedContent}
+                    // </div>
+                    // `;
+                    const content = document.createElement("div")
+                    const contentDiv = document.createElement("div");
+                    contentDiv.style.padding = "10px";
+                    contentDiv.style.borderBottom = "1px solid #ddd";
+                    contentDiv.style.marginBottom = "10px";
+                    contentDiv.textContent = `${input1.value} : 
+                    \n
+                    \n
+                    \n
+
+
                     
-                    // Display the content in the body
-                    const resultDiv = document.createElement("div");
-                    resultDiv.style.margin = "50px";
-                    // resultDiv.style.position="absolute"
-                    resultDiv.style.top="5%"
-                    resultDiv.style.left="10%"
-                    // resultDiv.style.width="500px"
-                    // resultDiv.style.height="400px"
-                    resultDiv.style.padding = "10px";
-                    resultDiv.style.border = "1px solid #ccc";
-                    resultDiv.style.borderRadius = "5px";
-                    resultDiv.style.height="450px"
-                    // resultDiv.style.backgroundColor = "#f9f9f9";
-                    // resultDiv.style.boxShadow = "0 2px 4px rgba(0, 0, 0, 0.1)";
-                    // resultDiv.style.overflowWrap = "break-word";
-                    resultDiv.style.overflow="scroll"
-                    resultDiv.style.overflowX="hidden"
-                    // resultDiv.style.overflowY="hidden"
+                    ${generatedContent}
+                    `;
 
-                    resultDiv.innerText = generatedContent;
+                    // contentDiv.appendChild(content)
 
-                    // document.body.appendChild(resultDiv);
-                    resultsContainer.appendChild(resultDiv);
+                    resultsContainer.appendChild(contentDiv);
 
-                    search=document.getElementById("search")
-                    // console.log(search)
+                    loadingIndicator.style.display = "none";
+
+                    // const resultDiv = document.createElement("div");
+                    // resultDiv.style.margin = "50px";
+                    // // resultDiv.style.position="absolute"
+                    // resultDiv.style.top="5%"
+                    // resultDiv.style.left="10%"
+                    // // resultDiv.style.width="500px"
+                    // // resultDiv.style.height="400px"
+                    // resultDiv.style.padding = "10px";
+                    // resultDiv.style.border = "1px solid #ccc";
+                    // resultDiv.style.borderRadius = "5px";
+                    // resultDiv.style.maxHeight="400px"
+                    // // resultDiv.style.backgroundColor = "#f9f9f9";
+                    // // resultDiv.style.boxShadow = "0 2px 4px rgba(0, 0, 0, 0.1)";
+                    // // resultDiv.style.overflowWrap = "break-word";
+                    // // resultDiv.style.overflow="scroll"
+                    // resultDiv.style.overflowY="auto"
+                    // // resultDiv.style.overflowY="hidden"
+
+                    // resultDiv.innerText = generatedContent;
+                    // // resultsContainer.innerText=generatedContent
+
+                    // // document.body.appendChild(resultDiv);
+                    // resultsContainer.appendChild(resultDiv);
+
+                    // search=document.getElementById("search")
+                    // // console.log(search)
                 
                     search.style.zIndex="20"
 
@@ -242,12 +284,12 @@ input1.addEventListener("keypress",async (e)=>{
                     h1.style.display="none"
                 }
                 loadingIndicator.style.display="none"
+                input1.value="";
             }
-        }
-        else{
-            alert("Prompt not recognized. Please try a valid one.")
-        }
+        // }
+        // else{
+        //     alert("Prompt not recognized. Please try a valid one.")
+        // }
     }
-    input1.value="";
 })
 
